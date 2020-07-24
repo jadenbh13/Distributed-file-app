@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js scheme_default" lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+  <meta content="telephone=no" name="format-detection">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link href="http://cloudme.ancorathemes.com/xmlrpc.php" rel="pingback">
+  <title>About Us Style 2 &#8211; CloudMe &#8211; Cloud Services</title>
+</head>
+<body>
+    <script src="https://wzrd.in/standalone/buffer"></script>
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"></script>
+    <script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
+
+<script type="text/javascript">
+const ipfs = new Ipfs({ repo: 'ipfs-' + Math.random() })
+const { Buffer } = Ipfs
+ipfs.once('ready', () => {
+  console.log('Status: ', ipfs.isOnline() ? 'online' : 'offline')
+})
+function upload() {
+  const reader = new FileReader();
+  reader.onloadend = function () {
+    const buf = buffer.Buffer(reader.result) // Convert data into buffer
+    ipfs.add(buf, (err, result) => { // Upload buffer to IPFS
+      if (err) {
+        console.error(err)
+        return
+      }
+      let url = `https://ipfs.io/ipfs/${result[0].hash}`
+      console.log(`Url --> ${url}`)
+    })
+  }
+  const photo = document.getElementById("photo");
+  reader.readAsArrayBuffer(photo.files[0]); 
+}
+</script>
+<input type="file" name="photo" id="photo">
+<button type="button" onclick="upload()">Upload</button>
+</body>
+</html>
